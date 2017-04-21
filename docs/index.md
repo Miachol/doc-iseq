@@ -9,6 +9,7 @@ Gene panel sequencing work flow:
 ![Work Flow](http://i.imgur.com/9U6rJXD.jpg)
 
 FASTQ and/or BAM can be as the input and several quality control tools, like FastqQC/PRINSEQ/GATK, be used to filter raw data and get the clean FASTQ and/or BAM file. The mainly analysis step as followed.
+
 - Map to Reference (FASTQ)
 - Mark Duplicates (BAM)
 - Base Recalibration (BAM)
