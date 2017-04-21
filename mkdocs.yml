@@ -1,0 +1,19 @@
+site_name: iseq Documentation
+
+repo_url: http://github.com/Miachol/doc-iseq
+repo_name: GitHub
+site_description: Documentation for iseq python package
+site_author: Li Jianfeng, et al
+copyright: 2016-2017 iseq
+
+docs_dir: docs
+
+pages:
+- iseq: index.md
+- User Guide:
+  - Install iseq: user-guide/install.md
+  - Usage : user-guide/usage.md
+- Misc:
+  - How to Contribute: misc/contribute.md
+
+theme: readthedocs
