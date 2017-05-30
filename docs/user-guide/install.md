@@ -3,6 +3,26 @@
 Due to institutional restrictions, I cannot put source code in GitHub. 
 Please [email](mailto:lee_jianfeng@foxmail.com) me directly if you want to download the iseq source code.
 
+```bash
+# Download the source code and gunzip
+python setup.py install
+# Or use pip
+pip install .
+```
+
+## iseq required softwares and databases
+
+```r
+# Using BioInstaller
+library(BioInstaller)
+requirements = c("bwa", "samtools", "picard", "vcftools", "gatk", 
+				 "varscan2", "ANNOVAR", "tvc", "lofreq", "gatk_bundle")
+dest.dir="~/opt/packages"
+download.dir=paste0("~/opt/source_code/", requirements)
+req.len <- length(requirements)
+install.bioinfo(requirements, destdir = rep(dest.dir, req.len), download.dir = download.dir)
+```
+
 <div id="disqus_thread"></div>
 <script>
     /**

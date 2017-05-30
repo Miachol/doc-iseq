@@ -1,7 +1,31 @@
 ## Introduction
-[iseq](http://bioinfo.rjh.com.cn/labs/jhuang/tools/iseq), a lightweight analysis pipeline for gene mutation analysis of NGS data, can be used to execute several bioinfomatics softwares command in Python and a integrity analysis flow for data of gene panel sequencing.
+[iseq](http://bioinfo.rjh.com.cn/labs/jhuang/tools/iseq) is a lightweight analysis pipeline for gene mutation analysis using NGS data, which can be used to execute several bioinfomatics softwares command in python and a integrity analysis work-flow for gene panel sequencing data.
 
 Genome reference, Fastq, Sam, Bam, Vcf and other format files be packaged in divided module that you can implement some of foundamental or specific manipulation.
+
+Mainly Feature:
+
+- Multiple sequence alignment softwares
+- Multiple variantion detection softwares
+- Easy to use
+- Extend easily
+- Single configuration file do all things
+- Output log be divided into in individual file
+
+
+## Requirements
+- Java
+- R
+- BioInstaller
+- GATK
+- tvc
+- bwa
+- lofreq
+- varscan2
+- samtools
+- vcftools
+- picard
+- ANNOVAR
 
 ## Work Flow
 Gene panel sequencing work flow:
