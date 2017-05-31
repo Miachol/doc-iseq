@@ -1,6 +1,6 @@
 ## Module
 ### - reffa
-NGS reference genome usually were [FASTA](https://en.wikipedia.org/wiki/FASTA_format) and `reffa` module mainly focused on FASTA format GENOME file. 
+NGS reference genome usually were [FASTA](https://en.wikipedia.org/wiki/FASTA_format) and `reffa` module mainly focused on FASTA format GENOME file.
 
 `ReffaFile` were a Python class of FASTA format GENOME file, which can be used to run `generate_dict` and `index` by BWA/STAR/Bowtie/Bowtie2.
 
@@ -17,7 +17,7 @@ reffa.bowtie2_index(config_dict)
 ```
 
 ### - fastq
-NGS sequencing raw data format were [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) and `fastq` module mainly focused on FASTQ format raw sequencing file. 
+NGS sequencing raw data format were [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) and `fastq` module mainly focused on FASTQ format raw sequencing file.
 
 `FastqFile` were a python class of FASTQ format raw sequencing file, which can be used to run `mapping` using BWA/STAR/Bowtie/Bowtie2/Tophat/Tophat2
 
@@ -35,7 +35,7 @@ fq_1.tophat_mapping(config_dict, "/path/outdir", fq_2)
 ```
 
 ### - sam
-NGS sequencing format were [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) after map to FASTA format GENOME without convert to BAM and `sam` module mainly focused on SAM format sequencing file. 
+NGS sequencing format were [SAM](https://en.wikipedia.org/wiki/SAM_(file_format)) after map to FASTA format GENOME without convert to BAM and `sam` module mainly focused on SAM format sequencing file.
 
 `SamFile` were a python class of SAM format sequencing file, which can be used to run `convert2bam` using [samtools](https://github.com/samtools/samtools)
 
@@ -48,7 +48,7 @@ sam.convert2bam(config_dict, "/path/outdir/out.bam")
 ```
 
 ### - bam
-NGS sequencing format were [BAM](https://en.wikipedia.org/wiki/SAMtools) after map to FASTA format GENOME and `bam` module mainly focused on BAM format sequencing file. 
+NGS sequencing format were [BAM](https://en.wikipedia.org/wiki/SAMtools) after map to FASTA format GENOME and `bam` module mainly focused on BAM format sequencing file.
 
 `BamFile` were a python class of BAM format sequencing file, which can be used to run `index/mpileup` using [samtools](https://github.com/samtools/samtools), `contig_reorder/add_read_group/mark_duplicates` using [Picard](https://github.com/broadinstitute/picard), `realigner_target_creator/indel_realigner/recalibration/print_reads/split_ntrim` using GATK for pre-process step, `/haplotype_caller/unifiedgenotyper_caller/mutect_caller/varscan_caller/torrent_caller/lofreq_caller/pindel_caller/freebayes_caller` for variants discover step.
 
@@ -68,7 +68,7 @@ bam.pindel_caller(config_dict, "/path/outdir/")
 ```
 
 ### - vcf
-NGS standard Variant Call Format were [VCF](https://en.wikipedia.org/wiki/Variant_Call_Format) and `vcf` module mainly focused on VCF format file. 
+NGS standard Variant Call Format were [VCF](https://en.wikipedia.org/wiki/Variant_Call_Format) and `vcf` module mainly focused on VCF format file.
 
 `VcfFile` were a python class of VCF format file, which can be used to run `fsqd_filter/control_filter/unifiedgenotyper_filter/snpfilter/annovar/merge/varscan2gatkfmt/select_snp/select_indel` using GATK and other tools
 
@@ -95,20 +95,77 @@ case_vcf.annovar(config_dict, "/path/outdir/") # Using ANNOVAR to annotation var
 
 
 ## Pipeline
-```bash
-# Without paired normal control sample
-panel.py -c config.cfg -s A01A -m fastq2vcf -1 A01_1.fq -2 A02_2.fq --bamprocess 00101111 -o outdir
-panel.py -c config.cfg -s A01A -m fastq2bam -1 A01_1.fq -2 A02_2.fq --bamprocess 00101111 -o outdir
-panel.py -c config.cfg -s A01A -m bam2vcf --in_bam A01.bam --bamprocess 00000000 -o outdir
-panel.py -c config.cfg -m genomeindex
 
-# With paired normal control sample
-panel_somatic.py -c config.cfg -s A01 -m fastq2vcf -1 A01A_1.fq.gz -2 A01A_2.fq.gz -3 A01C_1.fq.gz -4 A01C_2.fq.gz --bamprocess 00101111 -o outdir
-panel_somatic.py -c config.cfg -s A01 -m fastq2bam -1 A01A_1.fq -2 A01_2.fq -3 A01C_1.fq.gz -4 A01C_2.fq.gz --bamprocess 00101111 -o outdir
-panel_somatic.py -c config.cfg -s A01 -m bam2vcf --case_in_bam A01A.bam --control_in_bam A01C.bam --bamprocess 00000000 -o outdir
-panel_somatic.py -c config.cfg -m genomeindex
+**Without paired normal control sample**
+
+```bash
+# fastq2vcf mode
+panel -c config.cfg \
+         -s A01A \
+         -m fastq2vcf \
+         -1 A01A_1.fq.gz \
+         -2 A01A_2.fq.gz \
+         --bamprocess 00101111 \
+         -o outdir
+
+# fastq2bam
+panel -c config.cfg \
+         -s A01A \
+         -m fastq2bam \
+         -1 A01A_1.fq.gz \
+         -2 A01A_2.fq.gz \
+         --bamprocess 00101111 \
+         -o outdir
+
+# bam2vcf
+panel -c config.cfg \
+         -s A01A \
+         -m bam2vcf \
+         --in_bam A01A.bam \
+         --bamprocess 00000000 \
+         -o outdir
+
+# genomeindex mode
+panel -c config.cfg -m genomeindex
 ```
 
+**With paired normal control sample**
+
+```bash
+# fastq2vcf mode
+panel_somatic -c config.cfg \
+                 -s A01 \
+                 -m fastq2vcf \
+                 -1 A01A_1.fq.gz \
+                 -2 A01A_2.fq.gz \
+                 -3 A01C_1.fq.gz \
+                 -4 A01C_2.fq.gz \
+                 --bamprocess 00101111 \
+                 -o outdir
+
+# fastq2bam mode
+panel_somatic -c config.cfg \
+                 -s A01 \
+                 -m fastq2bam \
+                 -1 A01A_1.fq.gz \
+                 -2 A01A_2.fq.gz \
+                 -3 A01C_1.fq.gz \
+                 -4 A01C_2.fq.gz \
+                 --bamprocess 00101111 \
+                 -o outdir
+
+# bam2vcf mode
+panel_somatic -c config.cfg \
+                 -s A01 \
+                 -m bam2vcf \
+                 --case_in_bam A01A.bam \
+                 --control_in_bam A01C.bam \
+                 --bamprocess 00000000 \
+                 -o outdir
+
+# genomeindex mode
+panel_somatic -c config.cfg -m genomeindex
+```
 
 <div id="disqus_thread"></div>
 <script>
@@ -124,9 +181,9 @@ panel_somatic.py -c config.cfg -m genomeindex
     */
     (function() {  // DON'T EDIT BELOW THIS LINE
         var d = document, s = d.createElement('script');
-        
+
         s.src = '//doc-iseq.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
