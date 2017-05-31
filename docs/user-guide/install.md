@@ -1,6 +1,6 @@
 ## iseq main package
 
-Due to institutional restrictions, I cannot put source code in GitHub. 
+Due to institutional restrictions, I cannot put source code in GitHub.
 Please [email](mailto:lee_jianfeng@foxmail.com) me directly if you want to download the iseq source code.
 
 ```bash
@@ -14,8 +14,10 @@ pip install .
 
 ```r
 # Using BioInstaller
+# install.packages("BioInstaller")
 library(BioInstaller)
-requirements = c("bwa", "samtools", "picard", "vcftools", "gatk", 
+install.packages("optparse")
+requirements = c("bwa", "samtools", "picard", "vcftools", "gatk",
 				 "varscan2", "ANNOVAR", "tvc", "lofreq", "gatk_bundle")
 dest.dir="~/opt/packages"
 download.dir=paste0("~/opt/source_code/", requirements)
@@ -37,9 +39,9 @@ install.bioinfo(requirements, destdir = rep(dest.dir, req.len), download.dir = d
     */
     (function() {  // DON'T EDIT BELOW THIS LINE
         var d = document, s = d.createElement('script');
-        
+
         s.src = '//doc-iseq.disqus.com/embed.js';
-        
+
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
